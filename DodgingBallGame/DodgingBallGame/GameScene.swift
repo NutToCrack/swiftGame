@@ -296,52 +296,36 @@ class GameScene: SKScene, ButtonDelegate, SKPhysicsContactDelegate {
            }
     
     func generateLine() throws {
-        // change number of squares
         cleanUpSpikes()
-        switch direction {
-        case "left":
+        let holeBeginIndex = Int.random(in: 10...25)
+        if (direction == "left" || direction == "right")
+        {
             spike.position = CGPoint(x: frame.maxX + 1, y: frame.maxY - CGFloat(5) )
             spikes.append(spike)
             for i in 0...40 {
                 let newSpike: SKShapeNode = spike.copy() as! SKShapeNode
                 newSpike.position = CGPoint(x: spike.position.x, y: spike.position.y - CGFloat(i * 10))
+                if (i >= holeBeginIndex && i <= holeBeginIndex + 10)
+                {
+                    continue
+                }
                 spikes.append(newSpike)
-            }
-        case "right":
-            spike.position = CGPoint(x: frame.minX - 1, y: frame.maxY - CGFloat(5) )
-            spikes.append(spike)
-            for i in 0...40 {
-                let newSpike: SKShapeNode = spike.copy() as! SKShapeNode
-                newSpike.position = CGPoint(x: spike.position.x, y: spike.position.y - CGFloat(i * 10))
-                spikes.append(newSpike)
-            }
-        case "up":
+                addChild(newSpike)            }
+            
+        } else {
             spike.position = CGPoint(x: frame.minX - 1, y: frame.minY + 50 )
             spikes.append(spike)
             for i in 0...40 {
                 let newSpike: SKShapeNode = spike.copy() as! SKShapeNode
                 newSpike.position = CGPoint(x: spike.position.x + CGFloat(i * 10), y: spike.position.y)
+                if (i >= holeBeginIndex && i <= holeBeginIndex + 10)
+                {
+                    continue
+                }
                 spikes.append(newSpike)
+                addChild(newSpike)
             }
-        case "down":
-            spike.position = CGPoint(x: frame.minX - 1, y: frame.maxY + 1 )
-            spikes.append(spike)
-            for i in 0...40 {
-                let newSpike: SKShapeNode = spike.copy() as! SKShapeNode
-                newSpike.position = CGPoint(x: spike.position.x + CGFloat(i * 10), y: spike.position.y)
-                spikes.append(newSpike)
-            }
-        default:
-            throw GameError.runtimeError("Invalid direction!")
-        }
-        let holeBeginIndex = Int.random(in: 10...25)
-        for element in spikes.enumerated()
-        {
-            if (element.offset >= holeBeginIndex && element.offset <= holeBeginIndex + 10)
-            {
-              continue
-            }
-            addChild(element.element)
+            
         }
     }
     func checkCurve(){
