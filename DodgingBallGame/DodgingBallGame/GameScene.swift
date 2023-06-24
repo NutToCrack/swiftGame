@@ -38,11 +38,11 @@ class GameScene: SKScene, ButtonDelegate, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         if (leftButton.isPressed)
         {
-            moveBall(left: true)
+            moveBallLeft()
         }
         else if (rightButton.isPressed)
         {
-            moveBall(left: false)
+            moveBallRight()
         }
         do {
             try moveSpikes()
@@ -152,18 +152,17 @@ class GameScene: SKScene, ButtonDelegate, SKPhysicsContactDelegate {
             
     }
     
-    private func moveBall(left:Bool=false)
+    private func moveBallLeft()
     {
-        if(left)
-        {
             ball.position = CGPoint(x: ball.position.x - 5, y: ball.position.y)
             ball.zRotation = ball.zRotation + 0.2
-        }
-        else {
-            ball.position = CGPoint(x: ball.position.x + 5, y: ball.position.y)
-            ball.zRotation = ball.zRotation - 0.2
-        }
     }
+
+ private func moveBallRight()
+ {
+   ball.position = CGPoint(x: ball.position.x + 5, y: ball.position.y)
+   ball.zRotation = ball.zRotation - 0.2
+ }
     
     private func jump()
     {
