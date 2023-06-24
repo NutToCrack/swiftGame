@@ -7,7 +7,7 @@
 
 import SpriteKit
 import GameplayKit
- 
+
 enum GameError: Error {
     case runtimeError(String)
 }
